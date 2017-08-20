@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single" android:id="@+id/grp1">
+        <item
+            android:id="@+id/cc"
+            android:icon="@drawable/cc"
+            android:title="Control Center" />
+    </group>
+    <group android:checkableBehavior="single" android:id="@+id/grp2">
+        <item
+            android:id="@+id/mon"
+            android:icon="@drawable/mon"
+            android:title="Monitor" />
+    </group>
+    <group android:checkableBehavior="single" android:id="@+id/grp3">
+        <item
+            android:id="@+id/about"
+            android:icon="@drawable/about"
+            android:title="About" />
+    </group>
+
+</menu>
