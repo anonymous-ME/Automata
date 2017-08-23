@@ -10,12 +10,14 @@ public class Room {
     boolean fans;
     boolean isOccupied;
     double temperature;
+    String location_id;
 
-    public Room(boolean lights, boolean fans, boolean isOccupied, double temperature) {
+    public Room(boolean lights, boolean fans, boolean isOccupied, double temperature,String location_id) {
         this.lights = lights;
         this.fans = fans;
         this.isOccupied = isOccupied;
         this.temperature = temperature;
+        this.location_id = location_id;
     }
 
     public boolean isLightsOn() {
@@ -48,5 +50,13 @@ public class Room {
 
     public void setTemperature(double temperature) {
         this.temperature = temperature;
+    }
+
+    public String getLocation_id() {
+        return location_id;
+    }
+
+    public void setLocation_id(String location_id) {
+        this.location_id = location_id;
     }
 }

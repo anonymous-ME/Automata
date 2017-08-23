@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="anonymousme.automata.Fragments.ControlCenter">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Control Center" />
-
+        android:orientation="vertical">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rec_cc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 </FrameLayout>
