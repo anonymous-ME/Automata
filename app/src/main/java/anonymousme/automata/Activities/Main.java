@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import anonymousme.automata.CustomUI.Settings_Dialog;
 import anonymousme.automata.Fragments.*;
 import anonymousme.automata.R;
 
@@ -59,12 +60,12 @@ public class Main extends AppCompatActivity
     }
 
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -74,8 +75,9 @@ public class Main extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.refresh) {
-            return true;
+        if (id == R.id.settings) {
+            Settings_Dialog sd = new Settings_Dialog(this);
+            sd.show();
         }
 
         return super.onOptionsItemSelected(item);
