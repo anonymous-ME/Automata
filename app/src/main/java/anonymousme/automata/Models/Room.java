@@ -3,13 +3,29 @@ package anonymousme.automata.Models;
 /**
  * Created by affan on 20/8/17.
  */
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Room {
 
+    @SerializedName("lights")
+    @Expose
     boolean lights;
+
+    @SerializedName("fans")
+    @Expose
     boolean fans;
+
+    @SerializedName("isOccupied")
+    @Expose
     boolean isOccupied;
+
+    @SerializedName("temperature")
+    @Expose
     double temperature;
+
+    @SerializedName("location_id")
+    @Expose
     String location_id;
 
     public Room(boolean lights, boolean fans, boolean isOccupied, double temperature,String location_id) {

@@ -1,6 +1,8 @@
 package anonymousme.automata.Activities;
 
 import android.app.FragmentManager;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -76,11 +78,38 @@ public class Main extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.settings) {
+            // Reading from SharedPreferences
+            final SharedPreferences settings = getApplicationContext().getSharedPreferences("settings", MODE_PRIVATE);
+            final String value = settings.getString("auto_mode", "");
             Settings_Dialog sd = new Settings_Dialog(this);
             sd.show();
+            sd.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    // Reading from SharedPreferences
+                    String value_new = settings.getString("auto_mode", "");
+                    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                    if (getCheckedItem(navigationView) == 0 & ! value.equals(value_new)) {
+                        navigationView.getMenu().getItem(0).setChecked(true);
+                        onNavigationItemSelected(navigationView.getMenu().getItem(0));
+                    }
+                }
+            });
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private int getCheckedItem(NavigationView navigationView) {
+        Menu menu = navigationView.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem item = menu.getItem(i);
+            if (item.isChecked()) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
