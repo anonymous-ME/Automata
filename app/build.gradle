@@ -33,4 +33,5 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.sylversky.fontreplacer:fontreplacer:1.0'
 }
