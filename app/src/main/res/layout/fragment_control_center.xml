@@ -3,14 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="anonymousme.automata.Fragments.ControlCenter">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:orientation="vertical">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rec_cc"
+        <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rec_cc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/no_conn_view"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/offline"/>
+            <TextView
+                android:id="@+id/no_conn_txt"
+                android:text="Unable to connect to server"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/retry"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="#fff"
+                android:text="let's retry connecting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
 </FrameLayout>

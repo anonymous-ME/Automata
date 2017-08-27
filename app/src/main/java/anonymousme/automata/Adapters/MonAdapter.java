@@ -59,7 +59,7 @@ public class MonAdapter extends RecyclerView.Adapter<MonAdapter.MonViewHolder> {
         Room room_data = mDataset.get(position);
 
         holder.title.setText(room_data.getLocation_id());
-        holder.temp.setText(room_data.getTemperature()+" °C");
+        holder.temp.setText(((double) Math.round(room_data.getTemperature() * 100) / 100)+" °C");
         if (room_data.isOccupied()) {
             holder.stat.setText("Occupied");
             holder.stat_img.setImageResource(R.drawable.closed);

@@ -19,7 +19,7 @@ public class Automata extends Application {
         replacer.setDefaultFont("Comfortaa-Regular.ttf");
         replacer.setBoldFont("Comfortaa-Bold.ttf");
         replacer.setLightFont("Comfortaa-Light.ttf");
-
+        replacer.setItalicFont("italics.otf");
         replacer.applyFont();
 
     }

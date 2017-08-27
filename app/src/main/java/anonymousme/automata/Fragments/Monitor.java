@@ -2,11 +2,14 @@ package anonymousme.automata.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -29,6 +32,8 @@ public class Monitor extends Fragment {
 
     private RecyclerView recyclerView;
     private MonAdapter mAdapter;
+    private SwipeRefreshLayout swipeContainer;
+    private LinearLayout no_conn;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,6 +46,29 @@ public class Monitor extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
+
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                update();
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_dark,
+                android.R.color.holo_blue_dark,
+                android.R.color.holo_blue_light,
+                android.R.color.holo_blue_bright);
+        no_conn = (LinearLayout) view.findViewById(R.id.no_conn_view);
+        no_conn.findViewById(R.id.retry).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getView().getContext(),"Connecting...",Toast.LENGTH_SHORT).show();
+                update();
+            }
+        });
         update();
 
         // Inflate the layout for this fragment
@@ -71,11 +99,18 @@ public class Monitor extends Fragment {
                     Toast.makeText(getView().getContext(),"Error. "+e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
                 mAdapter.notifyDataSetChanged();
+
+                if ( swipeContainer.isRefreshing() )
+                    swipeContainer.setRefreshing(false);
+                no_conn.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<List<Room>> call, Throwable t) {
-                Toast.makeText(getView().getContext(),"Error. "+t.getMessage(),Toast.LENGTH_SHORT).show();
+                no_conn.setVisibility(View.VISIBLE);
+                ((TextView) no_conn.findViewById(R.id.no_conn_txt)).setText("Error. "+t.getMessage());
+                if ( swipeContainer.isRefreshing() )
+                    swipeContainer.setRefreshing(false);
             }
         });
         mAdapter.notifyDataSetChanged();
