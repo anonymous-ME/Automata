@@ -67,6 +67,9 @@ public class ControlCenter extends Fragment {
         no_conn.findViewById(R.id.retry).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                View v = getView();
+                if ( v != null )
+                    v.findViewById(R.id.main_progress).setVisibility(View.VISIBLE);
                 Toast.makeText(getView().getContext(),"Connecting...",Toast.LENGTH_SHORT).show();
                 update();
             }
@@ -81,7 +84,7 @@ public class ControlCenter extends Fragment {
         mAdapter.clear();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.2:5000/")
+                .baseUrl("http://172.26.46.10:5000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -98,17 +101,24 @@ public class ControlCenter extends Fragment {
                         mAdapter.add(room);
                 }
                 catch (Exception e) {
-                    Toast.makeText(getView().getContext(),"Error. "+e.getMessage(),Toast.LENGTH_SHORT).show();
+                    no_conn.setVisibility(View.VISIBLE);
+                    ((TextView) no_conn.findViewById(R.id.no_conn_txt)).setText("Error. "+e.getMessage());
                 }
                 mAdapter.notifyDataSetChanged();
 
                 if ( swipeContainer.isRefreshing() )
                     swipeContainer.setRefreshing(false);
                 no_conn.setVisibility(View.GONE);
+                View v = getView();
+                if ( v != null )
+                    v.findViewById(R.id.main_progress).setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<List<Room>> call, Throwable t) {
+                View v = getView();
+                if ( v != null )
+                    v.findViewById(R.id.main_progress).setVisibility(View.GONE);
                 no_conn.setVisibility(View.VISIBLE);
                 ((TextView) no_conn.findViewById(R.id.no_conn_txt)).setText("Error. "+t.getMessage());
                 if ( swipeContainer.isRefreshing() )

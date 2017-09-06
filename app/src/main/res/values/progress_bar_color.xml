@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="google_style">
+        <item>#008744</item>
+        <item>#0057e7</item>
+        <item>#d62d20</item>
+        <item>#ffa700</item>
+    </array>
+</resources>
