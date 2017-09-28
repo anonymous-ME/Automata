@@ -9,7 +9,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="about" > Electricity is considered the soul or life without which entire world remains dead and dormant. Our health,education,agriculture,engineering and other technical activity all are now conditioned by electricity. The goal of this project is to save electricity .
+    <string name="about"> Electricity is considered the soul or life without which entire world remains dead and dormant. Our health,education,agriculture,engineering and other technical activity all are now conditioned by electricity. The goal of this project is to save electricity .
         \n\n This product helps in saving electricity as it continuously monitors the electricity usage and turns off all those appliances which are currently not in use.
     \n\n We control light and Fan using ESP8266 module and Raspberry Pi. We also monitor the AC temperature by using temperature sensor . Cloud computing is used to connect and monitor all the component and sensor used in the system.
     </string>

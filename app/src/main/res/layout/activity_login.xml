@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="anonymousme.automata.Activities.Login">
+
+    <com.mattprecious.swirl.SwirlView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/fp_stat"
+        android:layout_centerInParent="true"
+        />
+
+    <TextView
+        android:textSize="11sp"
+        android:textAlignment="center"
+        android:text="Place your fingertip on the Home button to verify your identity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fp_stat"/>
+
+
+</RelativeLayout>
