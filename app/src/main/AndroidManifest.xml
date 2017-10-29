@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="anonymousme.automata">
+    package="anonymous.automata">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
-        android:name=".Automata"
+        android:name="anonymous.automata.Automata"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,12 +16,12 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".Activities.Main"
+            android:name="anonymous.automata.Activities.Main"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <activity android:name=".Activities.Login">
+        <activity android:name="anonymous.automata.Activities.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

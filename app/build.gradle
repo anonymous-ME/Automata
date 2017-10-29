@@ -2,9 +2,9 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "anonymousme.automata"
+        applicationId "anonymous.automata"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
@@ -35,5 +35,6 @@ dependencies {
     compile 'com.sylversky.fontreplacer:fontreplacer:1.0'
     compile 'com.hannesdorfmann.smoothprogressbar:library:1.0.0'
     compile 'com.mattprecious.swirl:swirl:1.0.0'
+    compile 'com.loopj.android:android-async-http:1.4.9'
     testCompile 'junit:junit:4.12'
 }

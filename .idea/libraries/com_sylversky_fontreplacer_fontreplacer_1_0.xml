@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.sylversky.fontreplacer:fontreplacer-1.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/fontreplacer-1.0.aar/b479180556cffa8c76b97422c5f13a93/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/fontreplacer-1.0.aar/b479180556cffa8c76b97422c5f13a93/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sylversky.fontreplacer/fontreplacer/1.0/bf12a6495d3b74e679b7ee51b50cfff3c12ea04f/fontreplacer-1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
