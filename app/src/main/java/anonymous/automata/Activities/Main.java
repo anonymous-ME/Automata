@@ -2,8 +2,10 @@ package anonymous.automata.Activities;
 
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,10 +14,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 import anonymous.automata.CustomUI.Settings_Dialog;
 import anonymous.automata.Fragments.*;
 import anonymous.automata.R;
+import cz.msebera.android.httpclient.Header;
 
 
 /**
@@ -95,6 +105,16 @@ public class Main extends AppCompatActivity
                     }
                 }
             });
+        } else if (id == R.id.voice) {
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(intent, 10);
+            } else {
+                Toast.makeText(this, "Your Device Don't Support Speech Input", Toast.LENGTH_SHORT).show();
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -136,5 +156,106 @@ public class Main extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case 10:
+                if (resultCode == RESULT_OK && data != null) {
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+                    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                    String cmd = result.get(0).toLowerCase();
+                    if ( cmd.contains("fan") ) {
+                        if( cmd.contains("off") ) {
+                            if (getCheckedItem(navigationView) == 0) {
+                                navigationView.getMenu().getItem(0).setChecked(true);
+                                onNavigationItemSelected(navigationView.getMenu().getItem(0));
+                            }
+                            // Off
+                            AsyncHttpClient client = new AsyncHttpClient();
+                            client.get("http://172.26.46.80:3000/fan/0",new AsyncHttpResponseHandler(){
+
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                                }
+                            });
+                        } else {
+                            if (getCheckedItem(navigationView) == 0) {
+                                navigationView.getMenu().getItem(0).setChecked(true);
+                                onNavigationItemSelected(navigationView.getMenu().getItem(0));
+                            }
+                            // On
+                            AsyncHttpClient client = new AsyncHttpClient();
+                            client.get("http://172.26.46.80:3000/fan/0",new AsyncHttpResponseHandler(){
+
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                                }
+                            });
+                        }
+
+                    } else if ( cmd.contains("light") ) {
+                        if( cmd.contains("off") ) {
+                            if (getCheckedItem(navigationView) == 0) {
+                                navigationView.getMenu().getItem(0).setChecked(true);
+                                onNavigationItemSelected(navigationView.getMenu().getItem(0));
+                            }
+                            // Off
+                            AsyncHttpClient client = new AsyncHttpClient();
+                            client.get("http://172.26.46.80:3000/light/1",new AsyncHttpResponseHandler(){
+
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                                }
+                            });
+                        } else {
+                            if (getCheckedItem(navigationView) == 0) {
+                                navigationView.getMenu().getItem(0).setChecked(true);
+                                onNavigationItemSelected(navigationView.getMenu().getItem(0));
+                            }
+                            // On
+                            AsyncHttpClient client = new AsyncHttpClient();
+                            client.get("http://172.26.46.80:3000/light/0",new AsyncHttpResponseHandler(){
+
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                                }
+                            });
+                        }
+
+                    }
+
+                    Toast.makeText(this,result.get(0),Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
     }
 }

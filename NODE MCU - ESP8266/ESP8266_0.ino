@@ -187,7 +187,7 @@ void loop() {
   else {
     Serial.println("Motion absent!");
   }
-  delay(1000);
+  //delay(1000);
   server.handleClient();
 }   
 
