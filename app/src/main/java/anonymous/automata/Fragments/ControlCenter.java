@@ -82,7 +82,7 @@ public class ControlCenter extends Fragment {
         mAdapter.clear();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.43.163:5000/")
+                .baseUrl("http://172.26.46.80:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

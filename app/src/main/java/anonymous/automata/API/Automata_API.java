@@ -11,6 +11,6 @@ import retrofit2.http.GET;
  */
 
 public interface Automata_API {
-    @GET("room/")
+    @GET("query/")
     Call<List<Room>> getRoomList();
 }

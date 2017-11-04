@@ -88,9 +88,9 @@ public class CCAdapter extends RecyclerView.Adapter<CCAdapter.CCViewHolder> {
         holder.fan_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    // On TODO
+                    // On
                     AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://192.168.43.62/light/0",new AsyncHttpResponseHandler(){
+                    client.get("http://172.26.46.80:3000/fan/0",new AsyncHttpResponseHandler(){
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -103,9 +103,9 @@ public class CCAdapter extends RecyclerView.Adapter<CCAdapter.CCViewHolder> {
                         }
                     });
                 }else{
-                    // Off TODO
+                    // Off
                     AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://192.168.43.62/light/1",new AsyncHttpResponseHandler(){
+                    client.get("http://172.26.46.80:3000/fan/1",new AsyncHttpResponseHandler(){
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
@@ -122,9 +122,9 @@ public class CCAdapter extends RecyclerView.Adapter<CCAdapter.CCViewHolder> {
         holder.light_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    // On TODO
+                    // On
                     AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://192.168.43.62/light/0",new AsyncHttpResponseHandler(){
+                    client.get("http://172.26.46.80:3000/light/0",new AsyncHttpResponseHandler(){
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -137,9 +137,9 @@ public class CCAdapter extends RecyclerView.Adapter<CCAdapter.CCViewHolder> {
                         }
                     });
                 }else{
-                    // Off TODO
+                    // Off
                     AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://192.168.43.62/light/1",new AsyncHttpResponseHandler(){
+                    client.get("http://172.26.46.80:3000/light/1",new AsyncHttpResponseHandler(){
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 

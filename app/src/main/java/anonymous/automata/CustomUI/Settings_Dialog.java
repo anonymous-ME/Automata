@@ -9,7 +9,11 @@ import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
 import anonymous.automata.R;
+import cz.msebera.android.httpclient.Header;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -45,11 +49,37 @@ public class Settings_Dialog extends Dialog {
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("auto_mode", "1");
                     editor.commit();
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    client.get("http://172.26.46.80:3000/automatic",new AsyncHttpResponseHandler(){
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                        }
+                    });
                 }else{
                     // Writing data to SharedPreferences
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("auto_mode", "0");
                     editor.commit();
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    client.get("http://172.26.46.80:3000/manual",new AsyncHttpResponseHandler(){
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                        }
+                    });
                 }
             }
         });
