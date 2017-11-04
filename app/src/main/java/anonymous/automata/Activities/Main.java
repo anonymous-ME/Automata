@@ -21,6 +21,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import anonymous.automata.CustomUI.Settings_Dialog;
 import anonymous.automata.Fragments.*;
@@ -167,21 +168,26 @@ public class Main extends AppCompatActivity
                 if (resultCode == RESULT_OK && data != null) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-                    NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                    final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                     String cmd = result.get(0).toLowerCase();
                     if ( cmd.contains("fan") ) {
                         if( cmd.contains("off") ) {
-                            if (getCheckedItem(navigationView) == 0) {
-                                navigationView.getMenu().getItem(0).setChecked(true);
-                                onNavigationItemSelected(navigationView.getMenu().getItem(0));
-                            }
                             // Off
+                            Toast.makeText(this,"Turning off fan..",Toast.LENGTH_LONG).show();
                             AsyncHttpClient client = new AsyncHttpClient();
-                            client.get("http://172.26.46.80:3000/fan/0",new AsyncHttpResponseHandler(){
+                            client.get("http://172.26.46.80:3000/fan/1",new AsyncHttpResponseHandler(){
 
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                                    if (getCheckedItem(navigationView) == 0) {
+                                        try {
+                                            TimeUnit.SECONDS.sleep(2);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        navigationView.getMenu().getItem(0).setChecked(true);
+                                        onNavigationItemSelected(navigationView.getMenu().getItem(0));
+                                    }
                                 }
 
                                 @Override
@@ -189,18 +195,24 @@ public class Main extends AppCompatActivity
 
                                 }
                             });
+
                         } else {
-                            if (getCheckedItem(navigationView) == 0) {
-                                navigationView.getMenu().getItem(0).setChecked(true);
-                                onNavigationItemSelected(navigationView.getMenu().getItem(0));
-                            }
                             // On
+                            Toast.makeText(this,"Turning on fan..",Toast.LENGTH_LONG).show();
                             AsyncHttpClient client = new AsyncHttpClient();
                             client.get("http://172.26.46.80:3000/fan/0",new AsyncHttpResponseHandler(){
 
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                                    if (getCheckedItem(navigationView) == 0) {
+                                        try {
+                                            TimeUnit.SECONDS.sleep(2);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        navigationView.getMenu().getItem(0).setChecked(true);
+                                        onNavigationItemSelected(navigationView.getMenu().getItem(0));
+                                    }
                                 }
 
                                 @Override
@@ -212,17 +224,22 @@ public class Main extends AppCompatActivity
 
                     } else if ( cmd.contains("light") ) {
                         if( cmd.contains("off") ) {
-                            if (getCheckedItem(navigationView) == 0) {
-                                navigationView.getMenu().getItem(0).setChecked(true);
-                                onNavigationItemSelected(navigationView.getMenu().getItem(0));
-                            }
                             // Off
+                            Toast.makeText(this,"Turning off lights..",Toast.LENGTH_LONG).show();
                             AsyncHttpClient client = new AsyncHttpClient();
                             client.get("http://172.26.46.80:3000/light/1",new AsyncHttpResponseHandler(){
 
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                                    if (getCheckedItem(navigationView) == 0) {
+                                        try {
+                                            TimeUnit.SECONDS.sleep(2);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        navigationView.getMenu().getItem(0).setChecked(true);
+                                        onNavigationItemSelected(navigationView.getMenu().getItem(0));
+                                    }
                                 }
 
                                 @Override
@@ -230,18 +247,24 @@ public class Main extends AppCompatActivity
 
                                 }
                             });
+
                         } else {
-                            if (getCheckedItem(navigationView) == 0) {
-                                navigationView.getMenu().getItem(0).setChecked(true);
-                                onNavigationItemSelected(navigationView.getMenu().getItem(0));
-                            }
                             // On
+                            Toast.makeText(this,"Turning on lights..",Toast.LENGTH_LONG).show();
                             AsyncHttpClient client = new AsyncHttpClient();
                             client.get("http://172.26.46.80:3000/light/0",new AsyncHttpResponseHandler(){
 
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
+                                    if (getCheckedItem(navigationView) == 0) {
+                                        try {
+                                            TimeUnit.SECONDS.sleep(2);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        navigationView.getMenu().getItem(0).setChecked(true);
+                                        onNavigationItemSelected(navigationView.getMenu().getItem(0));
+                                    }
                                 }
 
                                 @Override
@@ -253,7 +276,7 @@ public class Main extends AppCompatActivity
 
                     }
 
-                    Toast.makeText(this,result.get(0),Toast.LENGTH_LONG).show();
+
                 }
                 break;
         }
