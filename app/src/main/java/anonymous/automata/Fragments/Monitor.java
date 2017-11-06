@@ -1,6 +1,7 @@
 package anonymous.automata.Fragments;
 
 import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by affan on 20/8/17.
@@ -68,7 +71,7 @@ public class Monitor extends Fragment {
                 View v = getView();
                 if ( v != null )
                     v.findViewById(R.id.main_progress).setVisibility(View.VISIBLE);
-                Toast.makeText(getView().getContext(),"Connecting...",Toast.LENGTH_SHORT).show();
+                MDToast.makeText(getView().getContext(),"Connecting...",MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
                 update();
             }
         });
@@ -81,8 +84,11 @@ public class Monitor extends Fragment {
     private void update(){
         mAdapter.clear();
 
+        final SharedPreferences settings = getActivity().getApplicationContext().getSharedPreferences("settings", MODE_PRIVATE);
+        final String value_ip = settings.getString("server_ip", "");
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://172.26.46.80:3000/")
+                .baseUrl(value_ip+":3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

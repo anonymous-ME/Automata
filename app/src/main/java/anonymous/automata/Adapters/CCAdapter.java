@@ -3,7 +3,6 @@ package anonymous.automata.Adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -75,6 +74,7 @@ public class CCAdapter extends RecyclerView.Adapter<CCAdapter.CCViewHolder> {
         SharedPreferences settings = context.getSharedPreferences("settings", MODE_PRIVATE);
         // Reading from SharedPreferences
         String value = settings.getString("auto_mode", "");
+        final String value_ip = settings.getString("server_ip", "");
 
         if(value.equals("1")) {
             holder.fan_switch.setEnabled(false);
@@ -85,12 +85,14 @@ public class CCAdapter extends RecyclerView.Adapter<CCAdapter.CCViewHolder> {
         }
 
         //Fan Switch
+
         holder.fan_switch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     // On
+
                     AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://172.26.46.80:3000/fan/0",new AsyncHttpResponseHandler(){
+                    client.get(value_ip+":3000/fan/0",new AsyncHttpResponseHandler(){
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -105,7 +107,7 @@ public class CCAdapter extends RecyclerView.Adapter<CCAdapter.CCViewHolder> {
                 }else{
                     // Off
                     AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://172.26.46.80:3000/fan/1",new AsyncHttpResponseHandler(){
+                    client.get(value_ip+":3000/fan/1",new AsyncHttpResponseHandler(){
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
@@ -124,7 +126,7 @@ public class CCAdapter extends RecyclerView.Adapter<CCAdapter.CCViewHolder> {
                 if(isChecked){
                     // On
                     AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://172.26.46.80:3000/light/0",new AsyncHttpResponseHandler(){
+                    client.get(value_ip+":3000/light/0",new AsyncHttpResponseHandler(){
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -139,7 +141,7 @@ public class CCAdapter extends RecyclerView.Adapter<CCAdapter.CCViewHolder> {
                 }else{
                     // Off
                     AsyncHttpClient client = new AsyncHttpClient();
-                    client.get("http://172.26.46.80:3000/light/1",new AsyncHttpResponseHandler(){
+                    client.get(value_ip+":3000/light/1",new AsyncHttpResponseHandler(){
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 

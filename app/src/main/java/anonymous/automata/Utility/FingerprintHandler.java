@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 import com.mattprecious.swirl.SwirlView;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import anonymous.automata.Activities.Login;
 import anonymous.automata.Activities.Main;
@@ -54,7 +55,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         //I’m going to display the results of fingerprint authentication as a series of toasts.
         //Here, I’m creating the message that’ll be displayed if an error occurs//
 
-        Toast.makeText(context, "Authentication error\n" + errString, Toast.LENGTH_LONG).show();
+        MDToast.makeText(context,"Authentication error\n" + errString,MDToast.LENGTH_LONG,MDToast.TYPE_ERROR).show();
         login_activity.auth_status.setState(SwirlView.State.ERROR,true);
     }
 
@@ -63,7 +64,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     //onAuthenticationFailed is called when the fingerprint doesn’t match with any of the fingerprints registered on the device//
 
     public void onAuthenticationFailed() {
-        Toast.makeText(context, "Authentication failed", Toast.LENGTH_LONG).show();
+        MDToast.makeText(context,"Authentication failed",MDToast.LENGTH_LONG,MDToast.TYPE_ERROR).show();
         login_activity.auth_status.setState(SwirlView.State.ERROR,true);
         login_activity.auth_status.setState(SwirlView.State.ON,true);
     }
@@ -73,7 +74,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     //onAuthenticationHelp is called when a non-fatal error has occurred. This method provides additional information about the error,
     //so to provide the user with as much feedback as possible I’m incorporating this information into my toast//
     public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
-        Toast.makeText(context, "Authentication help\n" + helpString, Toast.LENGTH_LONG).show();
+        MDToast.makeText(context,"Authentication help\n" + helpString,MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
         login_activity.auth_status.setState(SwirlView.State.ERROR,true);
         login_activity.auth_status.setState(SwirlView.State.ON,true);
     }@Override

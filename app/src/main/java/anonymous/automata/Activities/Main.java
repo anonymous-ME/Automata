@@ -14,17 +14,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import anonymous.automata.CustomUI.Settings_Dialog;
-import anonymous.automata.Fragments.*;
+import anonymous.automata.Fragments.About;
+import anonymous.automata.Fragments.ControlCenter;
+import anonymous.automata.Fragments.Monitor;
 import anonymous.automata.R;
 import cz.msebera.android.httpclient.Header;
 
@@ -91,18 +93,51 @@ public class Main extends AppCompatActivity
         if (id == R.id.settings) {
             // Reading from SharedPreferences
             final SharedPreferences settings = getApplicationContext().getSharedPreferences("settings", MODE_PRIVATE);
-            final String value = settings.getString("auto_mode", "");
+            final String value_mode = settings.getString("auto_mode", "");
+            final String value_ip = settings.getString("server_ip", "");
             Settings_Dialog sd = new Settings_Dialog(this);
             sd.show();
             sd.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
                     // Reading from SharedPreferences
-                    String value_new = settings.getString("auto_mode", "");
+                    String valueMode_new = settings.getString("auto_mode", "");
+                    String valueIP_new = settings.getString("server_ip", "");
                     NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-                    if (getCheckedItem(navigationView) == 0 & ! value.equals(value_new)) {
+                    if (getCheckedItem(navigationView) == 0 & ! value_mode.equals(valueMode_new)) {
                         navigationView.getMenu().getItem(0).setChecked(true);
                         onNavigationItemSelected(navigationView.getMenu().getItem(0));
+                    }
+                    if (!value_ip.equals(valueIP_new)) {
+                        //Update UI
+                        navigationView.getMenu().getItem(getCheckedItem(navigationView)).setChecked(true);
+                        onNavigationItemSelected(navigationView.getMenu().getItem(getCheckedItem(navigationView)));
+                        //Update Mode On Server
+                        AsyncHttpClient client = new AsyncHttpClient();
+                        if(valueMode_new.equals("1"))
+                            client.get(valueIP_new+":3000/automatic",new AsyncHttpResponseHandler(){
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                                }
+                            });
+                        else
+                            client.get(valueIP_new+":3000/manual",new AsyncHttpResponseHandler(){
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+                                }
+                            });
                     }
                 }
             });
@@ -111,10 +146,15 @@ public class Main extends AppCompatActivity
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
 
-            if (intent.resolveActivity(getPackageManager()) != null) {
+            final SharedPreferences settings = getApplicationContext().getSharedPreferences("settings", MODE_PRIVATE);
+            final String value_mode = settings.getString("auto_mode", "");
+
+            if(value_mode.equals("1"))
+                MDToast.makeText(this,"Can't use voice command in automatic mode!!",MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
+            else if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivityForResult(intent, 10);
             } else {
-                Toast.makeText(this, "Your Device Don't Support Speech Input", Toast.LENGTH_SHORT).show();
+                MDToast.makeText(this,"Your Device Don't Support Speech Input",MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
             }
         }
 
@@ -163,6 +203,9 @@ public class Main extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        final SharedPreferences settings = getApplicationContext().getSharedPreferences("settings", MODE_PRIVATE);
+        final String value_ip = settings.getString("server_ip", "");
+
         switch (requestCode) {
             case 10:
                 if (resultCode == RESULT_OK && data != null) {
@@ -173,9 +216,10 @@ public class Main extends AppCompatActivity
                     if ( cmd.contains("fan") ) {
                         if( cmd.contains("off") ) {
                             // Off
-                            Toast.makeText(this,"Turning off fan..",Toast.LENGTH_LONG).show();
+                            MDToast.makeText(this,"Turning off fan...",MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
+
                             AsyncHttpClient client = new AsyncHttpClient();
-                            client.get("http://172.26.46.80:3000/fan/1",new AsyncHttpResponseHandler(){
+                            client.get(value_ip+":3000/fan/1",new AsyncHttpResponseHandler(){
 
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -198,9 +242,9 @@ public class Main extends AppCompatActivity
 
                         } else {
                             // On
-                            Toast.makeText(this,"Turning on fan..",Toast.LENGTH_LONG).show();
+                            MDToast.makeText(this,"Turning on fan...",MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
                             AsyncHttpClient client = new AsyncHttpClient();
-                            client.get("http://172.26.46.80:3000/fan/0",new AsyncHttpResponseHandler(){
+                            client.get(value_ip+":3000/fan/0",new AsyncHttpResponseHandler(){
 
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -225,9 +269,9 @@ public class Main extends AppCompatActivity
                     } else if ( cmd.contains("light") ) {
                         if( cmd.contains("off") ) {
                             // Off
-                            Toast.makeText(this,"Turning off lights..",Toast.LENGTH_LONG).show();
+                            MDToast.makeText(this,"Turning off lights...",MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
                             AsyncHttpClient client = new AsyncHttpClient();
-                            client.get("http://172.26.46.80:3000/light/1",new AsyncHttpResponseHandler(){
+                            client.get(value_ip+":3000/light/1",new AsyncHttpResponseHandler(){
 
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -250,9 +294,9 @@ public class Main extends AppCompatActivity
 
                         } else {
                             // On
-                            Toast.makeText(this,"Turning on lights..",Toast.LENGTH_LONG).show();
+                            MDToast.makeText(this,"Turning on lights...",MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
                             AsyncHttpClient client = new AsyncHttpClient();
-                            client.get("http://172.26.46.80:3000/light/0",new AsyncHttpResponseHandler(){
+                            client.get(value_ip+":3000/light/0",new AsyncHttpResponseHandler(){
 
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

@@ -20,4 +20,27 @@
         android:layout_height="wrap_content"
         style="@style/Base.TextAppearance.AppCompat.Body2"
         android:text="Auto IoT Control" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#f2f2f2" />
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp">
+
+        <EditText
+            android:id="@+id/addr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Server Address"/>
+
+    </android.support.design.widget.TextInputLayout>
+    <Button
+        android:id="@+id/save"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="#fff"
+        android:text="save Server Address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

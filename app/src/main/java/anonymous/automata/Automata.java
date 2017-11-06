@@ -3,6 +3,7 @@ package anonymous.automata;
 import android.app.Application;
 import android.content.SharedPreferences;
 
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.sylversky.fontreplacer.FontReplacer;
@@ -27,15 +28,35 @@ public class Automata extends Application {
         replacer.setItalicFont("italics.otf");
         replacer.applyFont();
 
-        //Set Mode On Server Side
-        AsyncHttpClient client = new AsyncHttpClient();
+        //FirebaseMessaging.getInstance().subscribeToTopic("everything");
+
+
         final SharedPreferences settings = this.getSharedPreferences("settings", MODE_PRIVATE);
 
-        // Reading from SharedPreferences
-        String value = settings.getString("auto_mode", "");
 
-        if(value.equals("1"))
-            client.get("http://172.26.46.80:3000/automatic",new AsyncHttpResponseHandler(){
+
+        //Set Mode On Server Side
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        // Reading from SharedPreferences
+        String value_mode = settings.getString("auto_mode", "");
+        String value_ip = settings.getString("server_ip", "");
+
+        //Set Default Settings Values
+        if (value_mode == null) {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("auto_mode", "0");
+            editor.commit();
+        }
+        if ( value_ip == null ) {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("server_ip", "http://192.168.1.2");
+            value_ip = "http://192.168.1.2";
+            editor.commit();
+        }
+
+        if(value_mode.equals("1"))
+            client.get(value_ip+":3000/automatic",new AsyncHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
@@ -47,7 +68,7 @@ public class Automata extends Application {
                 }
             });
         else
-            client.get("http://172.26.46.80:3000/manual",new AsyncHttpResponseHandler(){
+            client.get(value_ip+":3000/manual",new AsyncHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 

@@ -36,5 +36,9 @@ dependencies {
     compile 'com.hannesdorfmann.smoothprogressbar:library:1.0.0'
     compile 'com.mattprecious.swirl:swirl:1.0.0'
     compile 'com.loopj.android:android-async-http:1.4.9'
+    compile 'com.valdesekamdem.library:md-toast:0.9.0'
+    compile 'com.google.firebase:firebase-messaging:11.4.2'
     testCompile 'junit:junit:4.12'
 }
+
+apply plugin: 'com.google.gms.google-services'

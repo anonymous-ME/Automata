@@ -5,18 +5,18 @@ import android.app.KeyguardManager;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.mattprecious.swirl.SwirlView;
+import com.valdesekamdem.library.mdtoast.MDToast;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -78,24 +78,24 @@ public class Login extends AppCompatActivity {
             //Check whether the device has a fingerprint sensor//
             if (!fingerprintManager.isHardwareDetected()) {
                 // If a fingerprint sensor isn’t available, then inform the user that they’ll be unable to use your app’s fingerprint functionality//
-                Toast.makeText(Login.this,"Your device doesn't support fingerprint authentication",Toast.LENGTH_LONG).show();
+                MDToast.makeText(this,"Your device doesn't support fingerprint authentication",MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
             }
             //Check whether the user has granted your app the USE_FINGERPRINT permission//
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
                 // If your app doesn't have this permission, then display the following text//
-                Toast.makeText(Login.this,"Please enable the fingerprint permission",Toast.LENGTH_LONG).show();
+                MDToast.makeText(this,"Please enable the fingerprint permission",MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
             }
 
             //Check that the user has registered at least one fingerprint//
             if (!fingerprintManager.hasEnrolledFingerprints()) {
                 // If the user hasn’t configured any fingerprints, then display the following message//
-                Toast.makeText(Login.this,"No fingerprint configured. Please register at least one fingerprint in your device's Settings",Toast.LENGTH_LONG).show();
+                MDToast.makeText(this,"No fingerprint configured. Please register at least one fingerprint in your device's Settings",MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
             }
 
             //Check that the lockscreen is secured//
             if (!keyguardManager.isKeyguardSecure()) {
                 // If the user hasn’t secured their lockscreen with a PIN password or pattern, then display the following text//
-                Toast.makeText(Login.this,"Please enable lockscreen security in your device's Settings",Toast.LENGTH_LONG).show();
+                MDToast.makeText(this,"Please enable lockscreen security in your device's Settings",MDToast.LENGTH_LONG,MDToast.TYPE_INFO).show();
             } else {
                 try {
                     generateKey();
