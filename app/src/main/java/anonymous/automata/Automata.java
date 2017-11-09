@@ -2,6 +2,8 @@ package anonymous.automata;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.webkit.URLUtil;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.loopj.android.http.AsyncHttpClient;
@@ -43,12 +45,13 @@ public class Automata extends Application {
         String value_ip = settings.getString("server_ip", "");
 
         //Set Default Settings Values
-        if (value_mode == null) {
+        if (!(value_mode.equals("0")|value_mode.equals("1"))) {
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("auto_mode", "0");
             editor.commit();
         }
-        if ( value_ip == null ) {
+
+        if ( !(URLUtil.isValidUrl(value_ip) & (value_ip.length()>=10 )) ) {
             SharedPreferences.Editor editor = settings.edit();
             editor.putString("server_ip", "http://192.168.1.2");
             value_ip = "http://192.168.1.2";
